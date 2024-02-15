@@ -7,8 +7,8 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 
-def pendulum_equation(omega, theta, g, L):
-    alpha = -g / L * np.sin(theta)
+def pendulum_equation(omega, theta, g, L, damping):
+    alpha = -g / L * np.sin(theta) - (damping * omega)
     return omega, alpha
 
 def pendulum_simulator(screen, clock, L, omega):
@@ -23,7 +23,7 @@ def pendulum_simulator(screen, clock, L, omega):
                 sys.exit()
 
         # Calculate new state
-        omega, alpha = pendulum_equation(omega, theta, g, L)
+        omega, alpha = pendulum_equation(omega, theta, g, L, damping=0.1)
         omega += alpha * dt
         theta += omega * dt
 
@@ -35,10 +35,10 @@ def pendulum_simulator(screen, clock, L, omega):
         screen.fill(BLACK)
 
         # Draw pendulum string
-        pygame.draw.line(screen, WHITE, (250, 100), (250 + x, 100 + y), 2)
+        pygame.draw.line(screen, WHITE, (630, 200), (630 + x, 200 + y), 2)
 
         # Draw pendulum bob
-        pygame.draw.circle(screen, RED, (250 + x, 100 + y), 20)
+        pygame.draw.circle(screen, RED, (630 + x, 200 + y), 20)
 
         # Display update
         pygame.display.flip()
@@ -60,7 +60,7 @@ def main():
     clock = pygame.time.Clock()
 
     # Run simulation
-    pendulum_simulator(screen, clock, L=200, omega=0)
+    pendulum_simulator(screen, clock, L=300, omega=0.2  )
 
 if __name__ == "__main__":
     main()
