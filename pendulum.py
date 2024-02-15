@@ -13,7 +13,7 @@ def pendulum_equation(omega, theta, g, L, damping):
     return omega, alpha
 
 def pendulum_simulator(screen, clock, L, omega):
-    theta = np.pi / 4
+    theta = 0
     g = 9.81
     dt = 0.1
     dragging = False
@@ -80,7 +80,7 @@ def main():
     clock = pygame.time.Clock()
 
     # Run simulation
-    pendulum_simulator(screen, clock, L=300, omega=0.2)
+    pendulum_simulator(screen, clock, L=300, omega=0)
 
 
 if __name__ == "__main__":
