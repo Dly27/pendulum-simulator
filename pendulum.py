@@ -25,8 +25,8 @@ class Pendulum:
 def pendulum_equation(omega, theta, g, L, damping):
     alpha = -g / L * np.sin(theta) - (damping * omega)
     return omega, alpha
-
-def pendulum_simulator(screen, clock, pendulums):
+def pendulum_simulator(screen, clock,pendulums,  L, omega):
+    theta = 0
     g = 9.81
     dt = 0.1
     dragging = False
@@ -51,12 +51,12 @@ def pendulum_simulator(screen, clock, pendulums):
                     pendulum.dragging = False
 
         # Pendulum dragging movement
-            for pendulum in pendulums:
-                if pendulum.dragging:
-                    mouse_pos = pygame.mouse.get_pos()
-                    dx = mouse_pos[0] + pendulum.offset_x - pendulum.pivot[0]
-                    dy = mouse_pos[1] + pendulum.offset_y - pendulum.pivot[1]
-                    pendulum.theta = np.arctan2(dx, dy)
+        for pendulum in pendulums:
+            if pendulum.dragging:
+                mouse_pos = pygame.mouse.get_pos()
+                dx = mouse_pos[0] + pendulum.offset_x - pendulum.pivot[0]
+                dy = mouse_pos[1] + pendulum.offset_y - pendulum.pivot[1]
+                pendulum.theta = np.arctan2(dx, dy)
 
         # Calculate new state for each pendulum
         for pendulum in pendulums:
@@ -98,8 +98,9 @@ def main():
     pendulums = [pendulum1, pendulum2, pendulum3]
 
     # Run simulation
-    pendulum_simulator(screen, clock, pendulums)
+    pendulum_simulator(screen, clock,pendulums, L=300, omega=0)
 
 
 if __name__ == "__main__":
     main()
+
